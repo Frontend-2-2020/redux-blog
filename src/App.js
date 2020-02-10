@@ -1,26 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import LoginBtn from "./components/LoginBtn";
+import Blogpost from "./components/Blogpost";
+import { connect } from "react-redux";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  render() {
+    const { posts } = this.props;
+    return (
+      <div className="container">
+        <LoginBtn />
+
+        {posts.map((post, index) => (
+          <Blogpost post={post} key={post.id} />
+        ))}
+      </div>
+    );
+  }
 }
 
-export default App;
+// const mapStateToProps = state => {
+//   return {
+//     posts: state.posts
+//   };
+// };
+
+const mapStateToProps = state => ({
+  posts: state.posts
+});
+
+export default connect(mapStateToProps)(App);
